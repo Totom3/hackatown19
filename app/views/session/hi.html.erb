@@ -1,0 +1,5 @@
+<p><%= flash[:notice] %></p>
+
+<p>
+<%= if @user.present? then "Hi, #{@user.name}!" else "Who are you??" end %>
+</p>
