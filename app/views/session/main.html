@@ -3,6 +3,28 @@
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
+  var geocoder, map;
+  
+function initMap() {
+  var address = "2900 Edouard Montpetit Blvd, Montreal, QC H3T 1J4";
+  map = new google.maps.Map(document.getElementById('map'), {zoom: 4});
+  
+  geocoder = new google.maps.Geocoder()
+  geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == 'OK') {
+		
+        map.setCenter(results[0].geometry.location);
+		map.setZoom(14);
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });  
+}
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGcxHngmETy1apD6bQnCgDGtrapdTTYP4&callback=initMap">
+    </script>
+  <script>
 	$.urlParam = function(name){
 		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 		if (results==null) {
@@ -70,14 +92,27 @@
 					$('#searchResults *').remove();
 					$('#searchResults').css('width', '33%');
 					for (var i = 1; i <= data.length; ++i) {
+						t = data[i-1].title;
 						res = $("#result0").clone().attr("id", "result"+i);
 						res.css("display", "block");
-						res.find("h2").text(data[i-1].title);
+						res.find("h2").text(t);
 						res.find(".desc").text(data[i-1].description);
 						res.find(".time-start").text(data[i-1].start);
 						res.find(".event-location").text(data[i-1].location);
 						res.find(".tags").text(data[i-1].tags);
 						res.appendTo("#searchResults");
+						
+						geocoder.geocode( { 'address': data[i-1].location}, function(results, status) {
+							if (status == 'OK') {
+								var marker = new google.maps.Marker({
+								  position: results[0].geometry.location,
+								  map: map,
+								  title: t
+								});
+							} else {
+								alert('Geocode was not successful for the following reason: ' + status);
+							}
+						}); 
 					}
 					
 				}, "json");
@@ -144,40 +179,6 @@ function closeCreate() {
 	createForm.style.display = "none";
 }
 </script>
-    <script>
-function initMap() {
-  var uluru = {lat: -25.344, lng: 131.036};
-  var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 4, center: uluru});
-  var marker = new google.maps.Marker({position: uluru, map: map});
-}
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGcxHngmETy1apD6bQnCgDGtrapdTTYP4&callback=initMap">
-    </script>
-<!-- REPLACE THE OTHER INITMAP FUNCTION WITH THIS
-<script>
-	function initMap() {
-  var address = "2900 Edouard Montpetit Blvd, Montreal, QC H3T 1J4";
-  var map = new google.maps.Map(document.getElementById('map'), {zoom: 4});
-  
-  var geocoder = new google.maps.Geocoder()
-  geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == 'OK') {
-		
-        map.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-            map: map,
-            position: results[0].geometry.location
-        });
-		map.setZoom(15);
-      } else {
-        alert('Geocode was not successful for the following reason: ' + status);
-      }
-    });  
-}
-</script>
-//-->
 </head>
 <body style="height:100%">
 		<image src="assets/logo.png" height="10%" width="8%" style="position:fixed;padding:0">
@@ -231,13 +232,13 @@ function initMap() {
 				</div>
 				<div class="tag">
 					<label>
-						<input type="checkbox" name="tags[restaurant opening]" value="1"><span>New Restaurant</span>
+						<input type="checkbox" name="tags[restaurant events]" value="1"><span>Restaurant Events</span>
 					</label>
 				</div>
 
 				<div class="tag">
 					<label>
-						<input type="checkbox" name="tags[garage sale]" value="1"><span>Garage Sales</span>
+						<input type="checkbox" name="tags[garage sales]" value="1"><span>Garage Sales</span>
 					</label>
 				</div>
 				<div class="tag">
@@ -284,13 +285,13 @@ function initMap() {
 				</div>
 				<div class="tag">
 					<label>
-						<input type="checkbox" name="tags[restaurant opening]" value="1"><span>New Restaurant</span>
+						<input type="checkbox" name="tags[restaurant events]" value="1"><span>Restaurant Events</span>
 					</label>
 				</div>
 
 				<div class="tag">
 					<label>
-						<input type="checkbox" name="tags[garage sale]" value="1"><span>Garage Sales</span>
+						<input type="checkbox" name="tags[garage sales]" value="1"><span>Garage Sales</span>
 					</label>
 				</div>
 				<div class="tag">
@@ -339,13 +340,13 @@ function initMap() {
 				</div>
 				<div class="tag">
 					<label>
-						<input type="checkbox" name="tags[restaurant opening]" value="1"><span>New Restaurant</span>
+						<input type="checkbox" name="tags[restaurant events]" value="1"><span>Restaurant Events</span>
 					</label>
 				</div>
 
 				<div class="tag">
 					<label>
-						<input type="checkbox" name="tags[garage sale]" value="1"><span>Garage Sales</span>
+						<input type="checkbox" name="tags[garage sales]" value="1"><span>Garage Sales</span>
 					</label>
 				</div>
 				<div class="tag">

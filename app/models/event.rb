@@ -10,16 +10,19 @@ class Event < ApplicationRecord
      j[:start] = start.strftime("%B %d, %Y at %H:%M")
      j[:participants] = participants.size
      
-     tags_str = tags.join(', ')
+     tags_str = tags.map{|t| t.name}.join(', ')
      j[:tags] = tags_str
 
 
      intr = []
-     UserSubscriptions.where("tag IN ?", "(#{tags_str})").each do |sub|
-       intr[sub.user.id] = true
+     UserSubscription.all.each do |sub|
+       if sub.user.id and tags.exists?(sub.tag.id)
+         intr[sub.user.id] = true
+       end
      end
-
-     j[:interested] = intr.keys.size
+	
+     
+     j[:interested] = intr.size
 
      return j
   end

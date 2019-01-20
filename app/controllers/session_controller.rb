@@ -73,6 +73,26 @@ class SessionController < ApplicationController
 		location: location,
 		max_distance: max_distance)
 
+    if params[:tags].present?
+      it = nil
+      if params[:tags].is_a?(ActionController::Parameters)
+        it = params[:tags].keys
+      else
+        it = params[:tags].split(',')
+      end
+
+      it.each do |t|
+        t = t.downcase.strip
+	    tag = Tag.find_by(name: t)
+        if not tag.nil?
+          puts "Adding tag #{t}"
+		  UserSubscription.create(user: user, tag: tag)
+        else
+		  puts "Invalid tag #{t}!"
+		end
+      end
+    end
+		
     set_current_user(user.id)
     redirect_to '/'
   end
