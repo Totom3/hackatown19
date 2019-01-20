@@ -1,3 +1,6 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+
+  def not_found
+    render html: "404| Resource not found: '#{params[:path]}'", status: :not_found
+  end
 end

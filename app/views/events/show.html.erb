@@ -36,8 +36,8 @@
 </p>
 
 <p>
-  <strong>Participants:</strong>
-  <%= @event.participants.map{|p| '#{p.name} (#{p.id})' }.join(', ') %>
+  <strong>Participants (<%= @event.event_participants.size %>):</strong>
+  <%= @event.participants.map{|p| "#{p.name} (#{p.id})" }.join(', ') %>
 </p>
 
 <%= link_to 'Edit', edit_event_path(@event) %> |

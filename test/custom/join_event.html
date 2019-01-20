@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+	<body>
+
+	<form action="http://localhost:3000/api/join" accept-charset="UTF-8" method="post">
+  <div class="field">
+    <label for="event_id">Event ID</label>
+    <input id="event_id" type="integer" name="event_id" />
+  </div>
+
+  <div class="actions">
+    <input type="submit" data-disable-with="Join Event" />
+  </div>
+</form>
+
+	<hr/>
+	
+	<form action="http://localhost:3000/api/leave" accept-charset="UTF-8" method="post">
+
+  <div class="field">
+    <label for="event_id">Event ID</label>
+    <input id="event_id" type="integer" name="event_id" />
+  </div>
+
+  <div class="actions">
+    <input type="submit" data-disable-with="Leave Event" />
+  </div>
+</form>
+	</body>
+</html>

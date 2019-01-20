@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
-
-  get 'api/search'
-
-  match 'api/create', to: 'api#create', via: [:post, :put]
-  match 'api/comment', to: 'api#comment', via: [:post, :put]
-  match 'api/join', to: 'api#join', via: [:post, :put]
-  match 'api/leave', to: 'api#leave', via: [:post, :put]
+  
+  defaults format: :json do
+    get 'api/search'
+    get 'api/event/:id', to: 'api#event'
+    match 'api/create', to: 'api#create', via: [:post, :put]
+    match 'api/comment', to: 'api#comment', via: [:post, :put]
+    match 'api/join', to: 'api#join_event', via: [:post, :put]
+    match 'api/leave', to: 'api#leave_event', via: [:post, :put]
+  end
 
   get '/hi', to: 'session#hi'
   get '/login', to: 'session#login'
@@ -21,4 +23,6 @@ Rails.application.routes.draw do
     get '/users/:id/destroy', to: 'users#destroy', as: 'DestroyUser'
     get '/tags/:id/destroy', to: 'tags#destroy', as: 'DestroyTag'
   end
+
+  match '*path', to: 'application#not_found', via: [:all]
 end

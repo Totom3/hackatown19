@@ -8,8 +8,13 @@ class SessionController < ApplicationController
   end
 
   def create
-    email = params[:session][:email]
-    password = params[:session][:password]
+    if params[:session]
+      email = params[:session][:email]
+      password = params[:session][:password]
+    else
+      email = params[:email]
+      password = params[:password]
+    end
 
     if login_user(email, password)
       redirect_to '/hi'
