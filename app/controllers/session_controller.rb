@@ -3,13 +3,7 @@ class SessionController < ApplicationController
  
   def main
     render 'main'
-  end
-
-  def login
-    if has_current_user
-      redirect_to '/hi'
-    end
-  end
+  end;
 
   def create
     if params[:session]
@@ -21,10 +15,9 @@ class SessionController < ApplicationController
     end
 
     if login_user(email, password)
-      redirect_to '/hi'
+      redirect_to '/'
     else
-      flash.now[:notice] = 'Invalid email/password.'
-      render 'login'
+      redirect_to '/?failed_login=1'
     end
 
   end
@@ -35,11 +28,14 @@ class SessionController < ApplicationController
       flash[:notice] = 'Successfully logged out.'
     end
 
-    redirect_to '/hi'
+    redirect_to '/'
   end
 
   def hi
     @user = get_current_user
+    render json: {
+      user: (if @user.nil? then nil else @user.id end)
+    }
   end
 
   def signup

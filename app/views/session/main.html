@@ -3,7 +3,21 @@
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
+	$.urlParam = function(name){
+		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+		if (results==null) {
+		   return null;
+		}
+		return decodeURI(results[1]) || 0;
+	}
+  
 	var hasResults = false;
+	var isLoggedIn = false;
+	$.get('/hi', {}, function(data) {
+		if (data != null && data.user != null) {
+		   isLoggedIn = true
+		}
+	}, "json");
   
 	var openResults = function() {
 		$('#searchResults').css('width', '33%');
@@ -24,6 +38,9 @@
 	};
   
 	$(document).ready(function() {
+		if ($.urlParam('failed_login') == '1')
+		   openForm();
+	
 	    $('#searchResults').hover(
 			function(e) {
 				if (hasResults) {
@@ -37,7 +54,7 @@
 				}
 			}
 		);
-	
+		
 		$('#search').on("keypress", function(e) {
 			if (e.keyCode == 13) {
 				// Enter pressed: perform search
@@ -94,7 +111,10 @@ function closeReg() {
 </script>
 <script>
 function openCreate() {
-	document.getElementById("createForm").style.display = "block";
+    if (isLoggedIn)
+		document.getElementById("createForm").style.display = "block";
+	else
+		openForm();
 }
 var overlay = document.getElementById("createFormOverlay");
 function closeCreate() {
@@ -158,8 +178,8 @@ function initMap() {
 <div id="loginForm" onclick="closeForm()">
 	<form action="/login" method="post" id="form">
 		<h2 style="text-align:center">JOIN US NOW!</h2>
-		<input id="email" type="email" name="email" placeholder="Enter email" required><br>
-		<input id="password" type="password" name="password" placeholder="Enter password" required><br>
+		<input class="email" type="email" name="email" placeholder="Enter email" required><br>
+		<input class="password" type="password" name="password" placeholder="Enter password" required><br>
 		<button id="login" type="submit" class="login">LOGIN</button>
 		<br>
 		<button id="register" type="button" class="register" onclick="openReg()">REGISTER</button>
@@ -172,8 +192,8 @@ function initMap() {
 	<form action="/signup" method="post" id="regForm">
 		<h2>REGISTER NEW ACCOUNT</h2>
 		<input id="name" type="text" name="name" placeholder="Enter your name" required><br>
-		<input id="email" type="email" name="email" placeholder="Enter email" required><br>
-		<input id="password" type="password" name="password" placeholder="Enter password" required><br>
+		<input class="email" type="email" name="email" placeholder="Enter email" required><br>
+		<input class="password" type="password" name="password" placeholder="Enter password" required><br>
 		<input id="location" type="text" name="location" placeholder="Enter your location" required><br>
 		<p>Up to which distance would you like to search for events?</p>
 		<input id="distance" type="number" name="maxdistance" min="0" max="6000">
