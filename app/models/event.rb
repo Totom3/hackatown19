@@ -4,4 +4,12 @@ class Event < ApplicationRecord
   has_many :event_participants
   has_many :tags, through: :event_tags
   has_many :participants, through: :event_participants, source: 'user'
+
+  def as_json(options={})
+     j = super.as_json(options)
+     j[:start] = start.strftime("%B %d, %Y at %H:%M")
+     j[:interested] = 2
+     j[:participants] = participants.size
+     return j
+  end
 end
