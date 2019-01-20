@@ -25,5 +25,10 @@
   <%= @user.max_distance %>
 </p>
 
+<p>
+  <strong>Tag Subscriptions:</strong>
+  <%= @user.tags.map{|x| x.name}.join(', ') %>
+</p>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

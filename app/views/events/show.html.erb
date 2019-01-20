@@ -35,5 +35,10 @@
   <%= @event.tags.join(", ") %>
 </p>
 
+<p>
+  <strong>Participants:</strong>
+  <%= @event.participants.map{|p| '#{p.name} (#{p.id})' }.join(', ') %>
+</p>
+
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>
