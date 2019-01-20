@@ -79,6 +79,8 @@ class ApiController < ApplicationController
   end
 
   def create
+    puts params[:args]
+
     organizer = get_current_user
     if organizer.nil?
       send_error("Must be logged in.")
@@ -143,10 +145,18 @@ class ApiController < ApplicationController
     # Add event tags
     errors = []
     if params[:tags].present?
-      params[:tags].downcase.split(',').each do |t|
-        tag = Tag.find_by(name: t.strip)
+      it = nil
+      if params[:tags].is_a?(ActionController::Parameters)
+        it = params[:tags].keys
+      else
+        it = params[:tags].split(',')
+      end
+
+      it.each do |t|
+        t = t.downcase.strip
+	tag = Tag.find_by(name: t)
         if tag.nil?
-	  errors.push("Invalid tag '#{t.strip}'")
+	  errors.push("Invalid tag '#{t}'")
 	else
           EventTag.create(event: @event, tag: tag)
         end
