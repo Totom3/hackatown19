@@ -14,13 +14,15 @@ class Event < ApplicationRecord
      j[:tags] = tags_str
 
 
-     intr = []
+     intr = Hash.new
      UserSubscription.all.each do |sub|
        if sub.user.id and tags.exists?(sub.tag.id)
          intr[sub.user.id] = true
        end
      end
-	
+
+     puts "Interested: " + intr.to_json
+     puts "(#{intr.size})"
      
      j[:interested] = intr.size
 

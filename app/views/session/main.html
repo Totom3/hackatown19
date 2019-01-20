@@ -100,6 +100,8 @@ function initMap() {
 						res.find(".time-start").text(data[i-1].start);
 						res.find(".event-location").text(data[i-1].location);
 						res.find(".tags").text(data[i-1].tags);
+						res.find(".interested").text(data[i-1].interested);
+						res.find(".participants").text(data[i-1].participants);
 						res.appendTo("#searchResults");
 						
 						geocoder.geocode( { 'address': data[i-1].location}, function(results, status) {
@@ -387,7 +389,8 @@ function closeCreate() {
 			<br/>Location: <span class="event-location"></span>
 			<br/><br/>Tags: <span class="tags"></span></p>
 			
-			<p style="line-height:1px">Nb of interested</p>
+			<p>Interested: <span class="interested"></span>
+			<br/>Participating: <span class="participants"></span></p>
 	</div>
 	<hr class="resultSeparator"> 
 </div>
