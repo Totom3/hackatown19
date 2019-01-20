@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/login', to: 'session#login'
   match '/login', to: 'session#create', via: [:post]
   get '/logout', to: 'session#destroy'
+  match '/signup', to: 'session#signup', via: [:post]
 
   scope '/admin' do
     resources :events, :except => [:destroy]
