@@ -58,6 +58,51 @@ function initMap() {
 		$('#map').css('width', 'calc(100% - 20px)');
 		$('#map').css('margin-left', 'calc(20px)');
 	};
+	
+	function update_search() {
+		// Enter pressed: perform search
+		$.get('/api/search', {query: $('#search').val()}, function(data) {
+			if (data === null || data.length == 0) {
+				hasResults = false;
+				closeResults();
+				return;
+			}
+			
+			hasResults = true;
+			openResults();
+			$('#searchResults *').remove();
+			$('#searchResults').css('width', '33%');
+			for (var i = 1; i <= data.length; ++i) {
+				t = data[i-1].title;
+				res = $("#result0").clone().attr("id", "result"+i);
+				res.css("display", "block");
+				res.find("h2").text(t);
+				res.find(".desc").text(data[i-1].description);
+				res.find(".time-start").text(data[i-1].start);
+				res.find(".event-location").text(data[i-1].location);
+				res.find(".tags").text(data[i-1].tags);
+				res.find(".interested").text(data[i-1].interested);
+				res.find(".participants").text(data[i-1].participants);
+				res.find(".event-join").attr("onclick", "join_event("+data[i-1].id+")");
+				res.find(".event-leave").attr("onclick", "leave_event("+data[i-1].id+")");
+				
+				res.appendTo("#searchResults");
+				
+				geocoder.geocode( { 'address': data[i-1].location}, function(results, status) {
+					if (status == 'OK') {
+						var marker = new google.maps.Marker({
+						  position: results[0].geometry.location,
+						  map: map,
+						  title: t
+						});
+					} else {
+						alert('Geocode was not successful for the following reason: ' + status);
+					}
+				}); 
+			}
+		}, "json");
+		return false;
+	}
   
 	$(document).ready(function() {
 		if ($.urlParam('failed_login') == '1')
@@ -79,50 +124,22 @@ function initMap() {
 		
 		$('#search').on("keypress", function(e) {
 			if (e.keyCode == 13) {
-				// Enter pressed: perform search
-				$.get('/api/search', {query: $('#search').val()}, function(data) {
-					if (data === null || data.length == 0) {
-						hasResults = false;
-						closeResults();
-						return;
-					}
-					
-					hasResults = true;
-					openResults();
-					$('#searchResults *').remove();
-					$('#searchResults').css('width', '33%');
-					for (var i = 1; i <= data.length; ++i) {
-						t = data[i-1].title;
-						res = $("#result0").clone().attr("id", "result"+i);
-						res.css("display", "block");
-						res.find("h2").text(t);
-						res.find(".desc").text(data[i-1].description);
-						res.find(".time-start").text(data[i-1].start);
-						res.find(".event-location").text(data[i-1].location);
-						res.find(".tags").text(data[i-1].tags);
-						res.find(".interested").text(data[i-1].interested);
-						res.find(".participants").text(data[i-1].participants);
-						res.appendTo("#searchResults");
-						
-						geocoder.geocode( { 'address': data[i-1].location}, function(results, status) {
-							if (status == 'OK') {
-								var marker = new google.maps.Marker({
-								  position: results[0].geometry.location,
-								  map: map,
-								  title: t
-								});
-							} else {
-								alert('Geocode was not successful for the following reason: ' + status);
-							}
-						}); 
-					}
-					
-				}, "json");
-				return false;
+				update_search();
 			}
 		});
 	});
 	
+	function join_event(id) {
+		$.post('api/join', {event_id: id}, function(data) {
+			update_search();
+		});
+	}
+	
+	function leave_event(id) {
+		$.post('api/leave', {event_id: id}, function(data) {
+			update_search();
+		});
+	}
 	
 	
   </script>
@@ -391,6 +408,8 @@ function closeCreate() {
 			
 			<p>Interested: <span class="interested"></span>
 			<br/>Participating: <span class="participants"></span></p>
+			<button class="event-join"><b>Join</b></button>
+			<button class="event-leave"><b>Leave</b></button>
 	</div>
 	<hr class="resultSeparator"> 
 </div>

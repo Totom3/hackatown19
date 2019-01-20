@@ -16,7 +16,7 @@ class Event < ApplicationRecord
 
      intr = Hash.new
      UserSubscription.all.each do |sub|
-       if sub.user.id and tags.exists?(sub.tag.id)
+       if sub.user.id and tags.exists?(sub.tag.id) and not participants.exists?(sub.user.id)
          intr[sub.user.id] = true
        end
      end
