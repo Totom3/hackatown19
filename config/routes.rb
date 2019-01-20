@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     get 'api/search'
     get 'api/event/:id', to: 'api#event'
     match 'api/create', to: 'api#create', via: [:post, :put]
-    match 'api/comment', to: 'api#comment', via: [:post, :put]
+    match 'api/preferences', to: 'api#prefs', via: [:post, :put]
     match 'api/join', to: 'api#join_event', via: [:post, :put]
     match 'api/leave', to: 'api#leave_event', via: [:post, :put]
   end

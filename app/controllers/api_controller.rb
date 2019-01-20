@@ -143,13 +143,36 @@ class ApiController < ApplicationController
     render json: @event
   end
 
-  def comment
-  end
+  def prefs
+    user = get_current_user
+    if user.nil?
+      send_error("Must be logged in.")
+      return
+    end
 
-  def join
-  end
+    errors = []
 
-  def leave
+    tags_arr = params[:tags]
+    if tags_arr.present?
+      UserSubscription.where(user: user).destroy_all
+      tags_arr.downcase.split(',').each do |t|
+        tag = Tag.find_by(name: t.strip)
+	if tag.nil?
+	  errors.push("Invalid tag '#{t.strip}'")
+	else
+          UserSubscription.create(user: user, tag: tag)
+	end
+      end
+    end
+    
+    new_dist = params[:max_distance]
+    if new_dist.present?
+      dist = [0, new_dist.to_f].max
+      user.max_distance = dist
+      user.save
+    end
+
+    render json: {message: "Updated profile.", errors: errors}, status: :accepted
   end
 
 

@@ -2,29 +2,31 @@
 <html>
 	<body>
 
+	<h3>Join Event</h3>
 	<form action="http://localhost:3000/api/join" accept-charset="UTF-8" method="post">
-  <div class="field">
-    <label for="event_id">Event ID</label>
-    <input id="event_id" type="integer" name="event_id" />
-  </div>
-
-  <div class="actions">
-    <input type="submit" data-disable-with="Join Event" />
-  </div>
-</form>
+		<label for="event_id">Event ID</label>
+		<input id="event_id" type="integer" name="event_id" />
+		<input type="submit" name="Join" data-disable-with="Join Event" />
+	</form>
 
 	<hr/>
 	
+	<h3>Leave Event</h3>
 	<form action="http://localhost:3000/api/leave" accept-charset="UTF-8" method="post">
-
-  <div class="field">
-    <label for="event_id">Event ID</label>
-    <input id="event_id" type="integer" name="event_id" />
-  </div>
-
-  <div class="actions">
-    <input type="submit" data-disable-with="Leave Event" />
-  </div>
-</form>
+		<label for="event_id">Event ID</label>
+		<input id="event_id" type="integer" name="event_id" />
+		<input type="submit" name="Leave" data-disable-with="Leave Event" />
+	</form>
+	
+	<hr/>
+	
+	<h3>Profile Preferences</h3>
+	<form action="http://localhost:3000/api/preferences" accept-charset="UTF-8" method="post">
+		<label for="tags">Tags:</label>
+		<input id="tags" type="text" name="tags" />
+		<label for="max_distance">Max Distance:</label>
+		<input id="max_distance" type="text" name="max_distance" />
+		<input type="submit" name="Update" data-disable-with="Update Prefs" />
+	</form>
 	</body>
 </html>
