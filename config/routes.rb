@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  get '/', to: 'session#main'
+
   defaults format: :json do
     get 'api/search'
     get 'api/event/:id', to: 'api#event'

@@ -1,0 +1,257 @@
+html {
+	overflow-y: hidden;
+}
+body {
+  background-color: white;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+.topnav {
+	background: linear-gradient(to bottom, #3663A7, #5b8dd8, #3663A7);
+	padding: 2vh;
+	margin: 0;
+	border-bottom: 5px solid #1d427b;
+}
+.menu {
+	height: 6vh;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+}
+#create {
+	margin-left: 85%;
+	height: 4vh;
+	width: 4vh;
+	border-radius: 10%;
+	display: inline-block;
+	top: 50%;
+	transform: translateY(-50%);
+	position: absolute;
+}
+.searchbar {
+	width: 40vw;
+	height: 100%;
+	background-color: white;
+	border-radius: 10pt;
+	border: 2px solid #929292;
+	position: absolute;
+	left: 50%;
+    transform: translateX(-50%);
+	
+}
+#search {
+	border: none;
+	width: 80%;
+	margin-left: 1vh;
+	top: 50%;
+	transform: translateY(-50%);
+	position: absolute;
+}
+#search:focus {
+	outline-width: 0;
+}
+#searchicon {
+	margin-top:0;
+}
+#account {
+	margin-left: 90vw;
+	height: 8vh;
+	width: 8vh;
+	border-radius: 50%;
+	border: none;
+	display: inline-block;
+	top: 50%;
+	transform: translateY(-50%);
+	position: absolute;
+}
+#account:focus {
+	outline: 0;
+}
+#account:hover {
+	background-color: yellow;
+}
+#loginForm {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color: rgba(11,24,44,0.3);
+	z-index: 2;
+	cursor: pointer;
+}
+.form {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	z-index: 3;
+	background-color: #ffffff;
+	padding: 30px;
+	border: 5px solid red;
+}
+#email {
+	margin-bottom: 4vh;
+	border: 1px solid black;
+}
+#password {
+	margin-bottom: 4vh;
+	border: 1px solid black;
+}
+#login {
+	width: 11vw;
+	height: 4vw;
+}
+#map {
+    max-height: 100%;
+	height: calc(100% - 10vh - 5px);
+    width: calc(100% - 20px);
+	margin: 0;
+	margin-left: 20px;
+	padding: 0;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+}
+#searchResults {
+	background-color: #fffbef;
+	width: 0;
+	height: calc(100% - 10vh - 5px);
+	border-right: 20px solid #6c6a5e;
+	position: absolute;
+	-webkit-transition: width 0.5s;
+	transition: width 0.5s;
+	overflow-y: scroll;
+}
+#searchResults:hover {
+	width: 33%;
+}
+#searchResults:hover + #map {
+	width: calc(67% - 20px);
+	margin-left: calc(33% + 20px);
+}
+#searchResults:hover  .result {
+	visibility: visible;
+	opacity: 1;
+}
+#searchResults:hover  .resultSeparator {
+	display: block;
+}
+.result {
+	visibility: hidden;
+	opacity: 0;
+	transition-delay: 0.5s;
+	transition-property: opacity;
+	-webkit-transition-delay: 0.5s;
+	-webkit-transition-property: opacity;
+} 
+/** ADD TRANSITION DELAY FOR DISPLAY/VISIBILITY
+**/
+.resultSeparator {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+	display: none;
+	-webkit-transition: opacity 1s ease 1s;
+	transition: opacity 1s ease 1s;
+}
+.time {
+	display: inline-block;
+	line-height: 1px;
+}
+.info {
+	width: 70%;
+}
+#createForm {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color: rgba(11,24,44,0);
+	z-index: 2;
+	cursor: pointer;
+}
+.createForm {
+	width:50%;
+	height:50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	z-index: 3;
+	background-color: #ffffff;
+	padding: 30px 60px 60px;
+	border: 5px solid red;
+}
+.tag {
+	margin:4px;
+    background-color:#ff4da6;
+    border-radius:6px;
+    border:1px solid #b366ff;
+    overflow:auto;
+    float:left;
+}
+.tag label {
+    float:left;
+    width:10em;
+}
+
+.tag label span {
+    text-align:center;
+	color: #ffffff;
+    padding:3px 0px;
+    display:block;
+}
+
+.tag label input {
+    position:absolute;
+    top:2000px;
+}
+
+.tag input:checked + span{
+    background-color:#ffb3ff;
+    color:#ffffff;
+}
+#selectGrid {
+	position: relative;
+	width: 80%;
+	height: 20%;
+}
+#eventTitle {
+	font-size: 16px;
+	margin-bottom: 1vh;
+	border: 1px solid black;
+	border-radius: 4px;
+}
+#eventDesc {
+	font-size: 12px;
+	width: 100%;
+	height: 40%;
+	margin-bottom: 1vh;
+	border: 1px solid black;
+	border-radius: 4px;
+}

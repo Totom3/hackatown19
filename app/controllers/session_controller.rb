@@ -1,6 +1,10 @@
 class SessionController < ApplicationController
   include LoginUtils
-  
+ 
+  def main
+    render 'main'
+  end
+
   def login
     if has_current_user
       redirect_to '/hi'
