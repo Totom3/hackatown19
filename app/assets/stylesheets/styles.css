@@ -143,20 +143,6 @@ body {
 	transition: width 0.5s;
 	overflow-y: scroll;
 }
-#searchResults:hover {
-	width: 33%;
-}
-#searchResults:hover + #map {
-	width: calc(67% - 20px);
-	margin-left: calc(33% + 20px);
-}
-#searchResults:hover  .result {
-	visibility: visible;
-	opacity: 1;
-}
-#searchResults:hover  .resultSeparator {
-	display: block;
-}
 .result {
 	visibility: hidden;
 	opacity: 0;
@@ -177,7 +163,6 @@ body {
 }
 .time {
 	display: inline-block;
-	line-height: 1px;
 }
 .info {
 	width: 70%;

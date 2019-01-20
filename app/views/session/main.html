@@ -3,12 +3,65 @@
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script>
+	var hasResults = false;
+  
+	var openResults = function() {
+		$('#searchResults').css('width', '33%');
+		$('.result').css('visibility', 'visible');
+		$('.result').css('opacity', '1');
+		$('.resultSeparator').css('display', 'block');
+		$('#map').css('width', 'calc(67% - 20px)');
+		$('#map').css('margin-left', 'calc(33% + 20px)');
+	};
+	
+	var closeResults = function() {
+		$('#searchResults').css('width', '0');
+		$('.result').css('visibility', 'hidden');
+		$('.result').css('opacity', '0');
+		$('.resultSeparator').css('display', 'none');
+		$('#map').css('width', 'calc(100% - 20px)');
+		$('#map').css('margin-left', 'calc(20px)');
+	};
+  
 	$(document).ready(function() {
+	    $('#searchResults').hover(
+			function(e) {
+				if (hasResults) {
+					openResults();
+				}
+			},
+			
+			function(e) {
+				if (!hasResults) {
+					closeResults();
+				}
+			}
+		);
+	
 		$('#search').on("keypress", function(e) {
 			if (e.keyCode == 13) {
 				// Enter pressed: perform search
 				$.get('/api/search', {query: $('#search').val()}, function(data) {
-					alert("received data: "+ JSON.stringify(data));
+					if (data === null || data.length == 0) {
+						hasResults = false;
+						closeResults();
+						return;
+					}
+					
+					hasResults = true;
+					openResults();
+					$('#searchResults *').remove();
+					$('#searchResults').css('width', '33%');
+					for (var i = 1; i <= data.length; ++i) {
+						res = $("#result0").clone().attr("id", "result"+i);
+						res.css("display", "block");
+						res.find("h2").text(data[i-1].title);
+						res.find(".desc").text(data[i-1].description);
+						res.find(".time-start").text(data[i-1].start);
+						res.find(".event-location").text(data[i-1].location);
+						res.appendTo("#searchResults");
+					}
+					
 				}, "json");
 				return false;
 			}
@@ -156,71 +209,25 @@ function initMap() {
 
 
 <div id="searchResults">
-	<div class="result">
-		<div style="vertical-align:top;display:inline-block">
-		<image src="assets/result.jpg" height="100vh" width="100vw" style="margin-top:1vh">
-		</div>
-		<div class="info" style="display:inline-block">
-				<h2 style="line-height:1px">TITLE</h2>
-				<p style="">insesd  a asdfsa dfad ssd fas as fasdaa da fds asd a a d as dfas d fa df sad fa sdfs  as dsa s d dfdsa fsa df </p>
-				<p class="time" style="padding-right:3px">TIME START</p><p class="time">-</p><p class="time" style="padding-left:3px">TIME FINISH</p>
-				<p style="line-height:1px">Nb of interested</p>
-		</div>
-		<hr class="resultSeparator"> 
-	</div>
-	<div class="result">
-		<div style="vertical-align:top;display:inline-block">
-		<image src="assets/result.jpg" height="100vh" width="100vw" style="margin-top:1vh">
-		</div>
-		<div class="info" style="display:inline-block">
-				<h2 style="line-height:1px">TITLE</h2>
-				<p style="">insesd  a asdfsa dfad ssd fas as fasdaa da fds asd a a d as dfas d fa df sad fa sdfs  as dsa s d dfdsa fsa df </p>
-				<p class="time" style="padding-right:3px">TIME START</p><p class="time">-</p><p class="time" style="padding-left:3px">TIME FINISH</p>
-				<p style="line-height:1px">Nb of interested</p>
-		</div>
-		<hr class="resultSeparator"> 
-	</div>
-	<div class="result">
-		<div style="vertical-align:top;display:inline-block">
-		<image src="assets/result.jpg" height="100vh" width="100vw" style="margin-top:1vh">
-		</div>
-		<div class="info" style="display:inline-block">
-				<h2 style="line-height:1px">TITLE</h2>
-				<p style="">insesd  a asdfsa dfad ssd fas as fasdaa da fds asd a a d as dfas d fa df sad fa sdfs  as dsa s d dfdsa fsa df </p>
-				<p class="time" style="padding-right:3px">TIME START</p><p class="time">-</p><p class="time" style="padding-left:3px">TIME FINISH</p>
-				<p style="line-height:1px">Nb of interested</p>
-		</div>
-		<hr class="resultSeparator"> 
-	</div>
-	<div class="result">
-		<div style="vertical-align:top;display:inline-block">
-		<image src="assets/result.jpg" height="100vh" width="100vw" style="margin-top:1vh">
-		</div>
-		<div class="info" style="display:inline-block">
-				<h2 style="line-height:1px">TITLE</h2>
-				<p style="">insesd  a asdfsa dfad ssd fas as fasdaa da fds asd a a d as dfas d fa df sad fa sdfs  as dsa s d dfdsa fsa df </p>
-				<p class="time" style="padding-right:3px">TIME START</p><p class="time">-</p><p class="time" style="padding-left:3px">TIME FINISH</p>
-				<p style="line-height:1px">Nb of interested</p>
-		</div>
-		<hr class="resultSeparator"> 
-	</div>
-	<div class="result">
-		<div style="vertical-align:top;display:inline-block">
-		<image src="assets/result.jpg" height="100vh" width="100vw" style="margin-top:1vh">
-		</div>
-		<div class="info" style="display:inline-block">
-				<h2 style="line-height:1px">TITLE</h2>
-				<p style="">insesd  a asdfsa dfad ssd fas as fasdaa da fds asd a a d as dfas d fa df sad fa sdfs  as dsa s d dfdsa fsa df </p>
-				<p class="time" style="padding-right:3px">TIME START</p><p class="time">-</p><p class="time" style="padding-left:3px">TIME FINISH</p>
-				<p style="line-height:1px">Nb of interested</p>
-		</div>
-		<hr class="resultSeparator"> 
-	</div>
 </div>
 	
 <div id="map">			
 </div>
 
+</div>
+
+<div id="result0" class="result" style="display:none">
+	<div style="vertical-align:top;display:inline-block">
+	<image src="assets/result.jpg" height="100vh" width="100vw" style="margin-top:1vh">
+	</div>
+	<div class="info" style="display:inline-block">
+			<h2 style="line-height:1px">TITLE</h2>
+			<p class="desc" style="">DESC</p>
+			<p class="time" style="padding-right:3px">Time: <span class="time-start"></span><br/>Location: <span class="event-location"></span></p>
+			
+			<p style="line-height:1px">Nb of interested</p>
+	</div>
+	<hr class="resultSeparator"> 
 </div>
 
 </body>
