@@ -13,8 +13,12 @@ Rails.application.routes.draw do
   get '/logout', to: 'session#destroy'
 
   scope '/admin' do
-    resources :events
-    resources :users
-    resources :tags    
+    resources :events, :except => [:destroy]
+    resources :users, :except => [:destroy]
+    resources :tags, :except => [:destroy]
+
+    get '/events/:id/destroy', to: 'events#destroy', as: 'DestroyEvent'
+    get '/users/:id/destroy', to: 'users#destroy', as: 'DestroyUser'
+    get '/tags/:id/destroy', to: 'tags#destroy', as: 'DestroyTag'
   end
 end
