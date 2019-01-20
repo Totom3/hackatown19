@@ -223,7 +223,7 @@ function closeCreate() {
 
 <div id="loginForm" onclick="closeForm()">
 	<form action="/login" method="post" id="form">
-		<h2 style="text-align:center">JOIN US NOW!</h2>
+		<h2 style="text-align:center;color:#ffffff;">JOIN US NOW!</h2>
 		<input class="email" type="email" name="email" placeholder="Enter email" required><br>
 		<input class="password" type="password" name="password" placeholder="Enter password" required><br>
 		<button id="login" type="submit" class="login">LOGIN</button>
@@ -236,12 +236,12 @@ function closeCreate() {
 
 <div id="userprefs" onclick="closeUser()">
 	<form id="userForm">
-		<h2>MODIFY PREFERENCES</h2>
-		<p>Please input your location</p>
+		<h2 style="color:#ffffff;">MODIFY PREFERENCES</h2>
+		<p style="color:#ffffff;">Please input your location</p>
 		<input id="location" type="text" name="location" required><br>
-		<p>Up to which distance would you like to search for events?</p>
+		<p style="color:#ffffff;">Up to which distance would you like to search for events?</p>
 		<input id="distance" type="number" name="max_distance" min="0" max="6000">
-		<p>Select your interests</p>
+		<p style="color:#ffffff;">Select your interests</p>
 			<div id="selectGrid">
 				<div class="tag">
 					<label>
@@ -277,9 +277,9 @@ function closeCreate() {
 			</div>
 		<br>
 		
-		<button id="prefsSubmit" type="button" style="margin-top:1vh" onclick="changePrefs()">APPLY</button>
+		<p><button id="prefsSubmit" type="button" style="margin-top:1vh" onclick="changePrefs()">APPLY</button>
 		<button id="logout" type="button" style="margin-top:1vh" onclick="logOut()">LOG OUT</button>
-		
+		</p>
 	</form>
 </div>
 
@@ -287,14 +287,14 @@ function closeCreate() {
 
 <div id="registerForm" onclick="closeReg()">
 	<form action="/signup" method="post" id="regForm">
-		<h2>REGISTER NEW ACCOUNT</h2>
+		<h2 style="color:#ffffff;">REGISTER NEW ACCOUNT</h2>
 		<input id="name" type="text" name="name" placeholder="Enter your name" required><br>
 		<input class="email" type="email" name="email" placeholder="Enter email" required><br>
 		<input class="password" type="password" name="password" placeholder="Enter password" required><br>
 		<input id="location" type="text" name="location" placeholder="Enter your location" required><br>
-		<p>Up to which distance would you like to search for events?</p>
+		<p style="color:#ffffff;">Up to which distance would you like to search for events?</p>
 		<input id="distance" type="number" name="maxdistance" min="0" max="6000">
-		<p>Select your interests</p>
+		<p style="color:#ffffff;">Select your interests</p>
 			<div id="selectGrid">
 				<div class="tag">
 					<label>
@@ -337,7 +337,7 @@ function closeCreate() {
 <!--- CREATE EVENT //--->
 <div id="createForm" onclick="closeCreate()">
 	<form action="/api/create" method="post" class="createForm">
-		<h2> CREATE EVENT </h2>
+		<h2 style="color:#ffffff;"> CREATE EVENT </h2>
 		Title: <input id="eventTitle" type="text" name="title" placeholder="Event Name" required>  Location:
 		<input id="eventLocation" type="text" name="location" placeholder="Event Location" required><br>
 		Time:
@@ -349,7 +349,7 @@ function closeCreate() {
 		<br>
 		<textarea id="eventDesc" cols="40" rows="5" name="description" placeholder="Describe your event" required></textarea><br>
 		
-	<p>Select Tags for your Event</p>
+	<p style="color:#ffffff;">Select Tags for your Event</p>
 		<div id="selectGrid">
 				<div class="tag">
 					<label>
