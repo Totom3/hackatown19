@@ -76,6 +76,7 @@
 						res.find(".desc").text(data[i-1].description);
 						res.find(".time-start").text(data[i-1].start);
 						res.find(".event-location").text(data[i-1].location);
+						res.find(".tags").text(data[i-1].tags);
 						res.appendTo("#searchResults");
 					}
 					
@@ -91,14 +92,24 @@
 
 <script>
 function changePrefs() {
+	document.getElementById("userprefs").style.display = "none";
+	
+	$.post('/api/preferences', 
+	{location: $("#userForm #location").text(), 
+	max_distance: $('#userForm #distance').text()})
 }
 
 function logOut() {
+  document.getElementById("userprefs").style.display = "none";
+  window.location.href = "/logout";
 }
 
 function openForm() {
-	document.getElementById("loginForm").style.display = "block";
-	document.getElementById("form").style.display = "block";
+	if (isLoggedIn) {
+		document.getElementById("userprefs").style.display = "block";
+	} else {
+		document.getElementById("loginForm").style.display = "block";
+	}
 }
 var overlay = document.getElementById("loginForm");
 function closeForm() {
@@ -114,6 +125,10 @@ var regOverlay = document.getElementById("registerForm");
 function closeReg() {
 	if (event.target == registerForm)
 	registerForm.style.display = "none";
+}
+function closeUser() {
+	if (event.target == userprefs)
+	userprefs.style.display = "none";
 }
 </script>
 <script>
@@ -211,7 +226,7 @@ function initMap() {
 				</div>
 				<div class="tag">
 					<label>
-						<input type="checkbox" name="tags[jam session]" value="1"><span>Food</span>
+						<input type="checkbox" name="tags[jam session]" value="1"><span>Jam Session</span>
 					</label>
 				</div>
 				<div class="tag">
@@ -238,7 +253,7 @@ function initMap() {
 			</div>
 		<br>
 		
-		<button id="prefsSubmit" type="button" onclick="closeUser()" style="margin-top:1vh" onclick="changePrefs()">APPLY</button>
+		<button id="prefsSubmit" type="button" style="margin-top:1vh" onclick="changePrefs()">APPLY</button>
 		<button id="logout" type="button" style="margin-top:1vh" onclick="logOut()">LOG OUT</button>
 		
 	</form>
@@ -264,7 +279,7 @@ function initMap() {
 				</div>
 				<div class="tag">
 					<label>
-						<input type="checkbox" name="tags[jam session]" value="1"><span>Food</span>
+						<input type="checkbox" name="tags[jam session]" value="1"><span>Jam Session</span>
 					</label>
 				</div>
 				<div class="tag">
@@ -319,7 +334,7 @@ function initMap() {
 				</div>
 				<div class="tag">
 					<label>
-						<input type="checkbox" name="tags[jam session]" value="1"><span>Food</span>
+						<input type="checkbox" name="tags[jam session]" value="1"><span>Jam Session</span>
 					</label>
 				</div>
 				<div class="tag">
@@ -366,7 +381,10 @@ function initMap() {
 	<div class="info" style="display:inline-block">
 			<h2 style="line-height:1px">TITLE</h2>
 			<p class="desc" style="">DESC</p>
-			<p class="time" style="padding-right:3px">Time: <span class="time-start"></span><br/>Location: <span class="event-location"></span></p>
+			<p class="time" style="padding-right:3px">
+			Time: <span class="time-start"></span>
+			<br/>Location: <span class="event-location"></span>
+			<br/><br/>Tags: <span class="tags"></span></p>
 			
 			<p style="line-height:1px">Nb of interested</p>
 	</div>

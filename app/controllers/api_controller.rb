@@ -168,7 +168,7 @@ class ApiController < ApplicationController
       end
     end
 
-    render json: { event: @event, errors: errors}
+    redirect_to '/'
   end
 
   def prefs

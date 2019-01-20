@@ -8,8 +8,19 @@ class Event < ApplicationRecord
   def as_json(options={})
      j = super.as_json(options)
      j[:start] = start.strftime("%B %d, %Y at %H:%M")
-     j[:interested] = 2
      j[:participants] = participants.size
+     
+     tags_str = tags.join(', ')
+     j[:tags] = tags_str
+
+
+     intr = []
+     UserSubscriptions.where("tag IN ?", "(#{tags_str})").each do |sub|
+       intr[sub.user.id] = true
+     end
+
+     j[:interested] = intr.keys.size
+
      return j
   end
 end

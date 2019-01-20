@@ -18,6 +18,10 @@ module LoginUtils
     return nil
   end
 
+  def set_current_user(id)
+    session[:current_user_id] = id
+  end
+
   def logout_user
     session.delete(:current_user_id)
   end

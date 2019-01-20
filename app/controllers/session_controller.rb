@@ -73,10 +73,8 @@ class SessionController < ApplicationController
 		location: location,
 		max_distance: max_distance)
 
-    render json: {
-      message: "Successfully created user.",
-      user: user
-    }, status: :accepted
+    set_current_user(user.id)
+    redirect_to '/'
   end
 
   private
