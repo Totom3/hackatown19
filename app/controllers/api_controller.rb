@@ -93,7 +93,12 @@ class ApiController < ApplicationController
       return
     end
     
-    description = params[:description][0..749]
+    description = params[:description]
+    if description.nil?
+      send_error("Description cannot be blank.")
+      return
+    end
+    description = description.to_s[0..749]
     
     start = get_date_str(params[:start])
     if start.blank?

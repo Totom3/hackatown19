@@ -302,3 +302,28 @@ body {
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%);
 }
+#userprefs {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	background-color: rgba(11,24,44,0.3);
+	z-index: 2;
+	cursor: pointer;
+}
+#userForm {
+	position:absolute;
+	width:30%;
+	height:55%;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	z-index: 3;
+	background-color: #ffffff;
+	padding: 30px 20px 60px;
+	border: 5px solid red;
+}
