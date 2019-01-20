@@ -4,4 +4,11 @@
 # Examples:
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+#   Character.create(name: 'Luke', movie: movies.first)o
+
+Tag.create(name: "soccer")
+Tag.create(name: "ski")
+Tag.create(name: "jam session")
+Tag.create(name: "dancing")
+Tag.create(name: "hockey")
+Tag.create(name: "sales")
