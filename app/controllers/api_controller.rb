@@ -140,7 +140,20 @@ class ApiController < ApplicationController
     # Add organizer to event
     EventParticipant.create(event: @event, user: organizer)
 
-    render json: @event
+    # Add event tags
+    errors = []
+    if params[:tags].present?
+      params[:tags].downcase.split(',').each do |t|
+        tag = Tag.find_by(name: t.strip)
+        if tag.nil?
+	  errors.push("Invalid tag '#{t.strip}'")
+	else
+          EventTag.create(event: @event, tag: tag)
+        end
+      end
+    end
+
+    render json: { event: @event, errors: errors}
   end
 
   def prefs

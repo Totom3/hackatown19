@@ -32,7 +32,7 @@
 
 <p>
   <strong>Tags:</strong>
-  <%= @event.tags.join(", ") %>
+  <%= @event.tags.map{|t| t.name}.join(", ") %>
 </p>
 
 <p>
